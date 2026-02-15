@@ -9,17 +9,17 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const role = await login(email, password);
-      if (role === "admin") navigate("/admin");
-      else if (role === "hr") navigate("/hr");
-      else navigate("/user");
-    } catch {
-      alert("Invalid credentials");
-    }
-  };
+  e.preventDefault();
+  try {
+    const role = await login(email, password);
 
+    if (role === "Admin") navigate("/admin");
+    else if (role === "HR") navigate("/hr");
+    else navigate("/user");
+  } catch {
+    alert("Invalid credentials");
+  }
+};
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-96">
