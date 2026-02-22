@@ -25,6 +25,16 @@ export default function UserLayout() {
             Dashboard
           </NavLink>
 
+          {/* ✅ ADDED ATTENDANCE */}
+          <NavLink
+            to="/user/attendance"
+            className={({ isActive }) =>
+              isActive ? "text-blue-400 font-semibold" : "text-gray-300"
+            }
+          >
+            Attendance
+          </NavLink>
+
           <NavLink
             to="/user/leaves"
             className={({ isActive }) =>
@@ -58,4 +68,4 @@ export default function UserLayout() {
       </main>
     </div>
   );
-}
+} 
