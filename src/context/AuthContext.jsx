@@ -1,35 +1,16 @@
 import { createContext, useContext, useState } from "react";
-import api from "../api/axios";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role"));
-
-  const login = async (email, password) => {
-    const res = await api.post("/auth/login", { email, password });
-
-    const { token, user } = res.data;
-
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", user.role);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    setToken(token);
-    setRole(user.role);
-
-    return user.role;
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    setToken(null);
-    setRole(null);
-  };
+  const [auth, setAuth] = useState({
+    token: localStorage.getItem("token"),
+    role: localStorage.getItem("role"),
+    user: null,
+  });
 
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider value={{ ...auth, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

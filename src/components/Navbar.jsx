@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const role = localStorage.getItem("role"); // expects "Admin" | "HR" | "User"
-  const user = JSON.parse(localStorage.getItem("user")); // for name display
+  const role = localStorage.getItem("role"); // user, admin, hr
   const navigate = useNavigate();
 
   const logout = () => {
@@ -26,23 +25,9 @@ function Navbar() {
           </>
         )}
 
-        {role === "Admin" && (
-          <Link to="/admin" className="hover:text-blue-400">
-            Admin
-          </Link>
-        )}
-
-        {role === "HR" && (
-          <Link to="/hr" className="hover:text-blue-400">
-            HR
-          </Link>
-        )}
-
-        {role === "User" && (
-          <Link to="/user" className="hover:text-blue-400">
-            {user?.name || "User"}
-          </Link>
-        )}
+        {role === "admin" && <Link to="/admin">Admin</Link>}
+        {role === "hr" && <Link to="/hr">HR</Link>}
+        {role === "user" && <Link to="/user">User</Link>}
 
         {role && (
           <button

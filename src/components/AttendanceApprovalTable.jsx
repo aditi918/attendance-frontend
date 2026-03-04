@@ -1,21 +1,21 @@
-import axios from "../api/axios";
+import userApi from "../api/userApi";
 import { useEffect, useState } from "react";
 
 function AttendanceApprovalTable() {
   const [records, setRecords] = useState([]);
 
   const fetchAttendance = async () => {
-    const res = await axios.get("/hr/pending-attendance");
+    const res = await userApi.get("/hr/pending-attendance");
     setRecords(res.data);
   };
 
   const handleApprove = async (id) => {
-    await axios.put(`/hr/attendance/${id}/approve`);
+    await userApi.put(`/hr/attendance/${id}/approve`);
     fetchAttendance();
   };
 
   const handleReject = async (id) => {
-    await axios.put(`/hr/attendance/${id}/reject`);
+    await userApi.put(`/hr/attendance/${id}/reject`);
     fetchAttendance();
   };
 

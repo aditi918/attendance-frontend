@@ -19,7 +19,7 @@ function Signup() {
           name,
           email,
           password,
-          role: "user", // 🔥 FIX: lowercase role
+          role: "user",
         }),
       });
 

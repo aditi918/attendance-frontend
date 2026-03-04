@@ -1,49 +1,37 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Public pages
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 
-// Dashboards (pages)
 import Admin from "./pages/Admin";
 import HR from "./pages/HR";
 import User from "./pages/User";
 
-// Layouts
+import MyAttendance from "./pages/employee/MyAttendance";
+import ApplyLeave from "./pages/employee/ApplyLeave";
+import Profile from "./pages/employee/Profile";
+import MarkAttendance from "./pages/employee/MarkAttendance";
+
 import AdminLayout from "./layouts/AdminLayout";
 import HRLayout from "./layouts/HRLayout";
-import UserLayout from "./Layouts/UserLayout";
+import UserLayout from "./layouts/UserLayout";
 
-// Auth
 import ProtectedRoute from "./components/ProtectedRoute";
-
-function App() {
+import AutoRedirect from "./components/AutoRedirect";
+export default function App() {
   return (
     <Routes>
-      {/* ---------- Public ---------- */}
-      <Route
-        path="/"
-        element={
-          localStorage.getItem("role") === "Admin" ? (
-            <Navigate to="/admin" replace />
-          ) : localStorage.getItem("role") === "HR" ? (
-            <Navigate to="/hr" replace />
-          ) : localStorage.getItem("role") === "User" ? (
-            <Navigate to="/user" replace />
-          ) : (
-            <Home />
-          )
-        }
-      />
+      {/* Public */}
+      <Route path="/" element={<AutoRedirect />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      {/* ---------- Admin ---------- */}
+      {/* Admin */}
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRoles={["Admin"]}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <AdminLayout />
           </ProtectedRoute>
         }
@@ -51,11 +39,11 @@ function App() {
         <Route index element={<Admin />} />
       </Route>
 
-      {/* ---------- HR ---------- */}
+      {/* HR */}
       <Route
         path="/hr"
         element={
-          <ProtectedRoute allowedRoles={["HR"]}>
+          <ProtectedRoute allowedRoles={["hr"]}>
             <HRLayout />
           </ProtectedRoute>
         }
@@ -63,22 +51,23 @@ function App() {
         <Route index element={<HR />} />
       </Route>
 
-      {/* ---------- User ---------- */}
+      {/* User */}
       <Route
         path="/user"
         element={
-          <ProtectedRoute allowedRoles={["User"]}>
+          <ProtectedRoute allowedRoles={["user"]}>
             <UserLayout />
           </ProtectedRoute>
         }
       >
         <Route index element={<User />} />
+        <Route path="attendance" element={<MyAttendance />} />
+        <Route path="apply-leave" element={<ApplyLeave />} />
+        <Route path="mark-attendance" element={<MarkAttendance />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
 
-      {/* ---------- Fallback ---------- */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
-
-export default App;

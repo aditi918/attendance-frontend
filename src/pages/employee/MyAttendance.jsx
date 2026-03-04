@@ -1,41 +1,36 @@
-import React, { useEffect, useState } from "react";
-import userApi from "../../api/userApi";
+import { useEffect, useState } from "react";
 
-const MyAttendance = () => {
+export default function MyAttendance() {
   const [attendance, setAttendance] = useState([]);
 
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      const res = await userApi.get("/attendance/my");
-      setAttendance(res.data);
-    };
-    fetchAttendance();
-  }, []);
+  const markAttendance = () => {
+    setAttendance([...attendance, { date: new Date().toDateString(), status: "Present" }]);
+  };
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">My Attendance</h2>
+    <div>
+      <h2 className="text-2xl font-bold mb-6">My Attendance</h2>
+
+      <button onClick={markAttendance} className="bg-green-600 px-4 py-2 rounded mb-4">
+        Mark Attendance
+      </button>
 
       <table className="w-full border">
         <thead>
-          <tr className="bg-gray-100">
+          <tr>
             <th>Date</th>
             <th>Status</th>
-            <th>Approved</th>
           </tr>
         </thead>
         <tbody>
-          {attendance.map((item) => (
-            <tr key={item._id}>
-              <td>{item.date}</td>
-              <td>{item.status}</td>
-              <td>{item.isApproved ? "Yes" : "Pending"}</td>
+          {attendance.map((a, i) => (
+            <tr key={i}>
+              <td>{a.date}</td>
+              <td>{a.status}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-};
-
-export default MyAttendance;
+}
